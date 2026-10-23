@@ -2,8 +2,8 @@
 import socket
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
-from app.models import HealthStatus
-from app.database import get_db_connection, release_db_connection
+from models import HealthStatus
+from database import get_db_connection, release_db_connection
 
 router = APIRouter()
 

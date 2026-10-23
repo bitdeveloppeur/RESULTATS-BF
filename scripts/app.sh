@@ -18,14 +18,14 @@ cd /opt/resultats-bf
 
 # 3. Copier l'application depuis /vagrant/app
 echo " Copie de l'application..."
-cp -r /vagrant/app/* /opt/resultats-bf/
+cp -r /vagrant/app /opt/resultats-bf/
 
 # 4. Créer un virtual env et installer les dépendances
 echo "Installation des dépendances Python..."
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv /opt/resultats-bf/venv
+source /opt/resultats-bf/venv/bin/activate
 pip install --quiet --upgrade pip
-pip install --quiet -r requirements.txt
+pip install --quiet -r /opt/resultats-bf/app/requirements.txt
 
 # 5. Variables d'environnement pour la base de données
 echo "Configuration des variables d'environnement..."
@@ -47,7 +47,7 @@ After=network.target
 [Service]
 Type=simple
 User=root
-WorkingDirectory=/opt/resultats-bf
+WorkingDirectory=/opt/resultats-bf/app
 Environment="PATH=/opt/resultats-bf/venv/bin"
 EnvironmentFile=/opt/resultats-bf/.env
 ExecStart=/opt/resultats-bf/venv/bin/python server.py

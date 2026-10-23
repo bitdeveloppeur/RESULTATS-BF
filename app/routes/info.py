@@ -1,8 +1,8 @@
 """Endpoint /info - Informations serveur"""
 import socket
 from fastapi import APIRouter
-from app.models import InfoResponse
-from app.config import DB_HOST, DB_PORT, DB_NAME
+from models import InfoResponse
+from config import DB_HOST, DB_PORT, DB_NAME
 
 router = APIRouter()
 

@@ -61,7 +61,10 @@ if [ -f /vagrant/config/noeuds.yml ]; then
     
     # Extraire les noms et IPs des serveurs app depuis le YAML
     # Méthode simple sans dépendances (grep + awk)
-    awk '/- nom: app[0-9]+/{name=$3} /ip:/{ip=$2; if(name) print name, ip; name=""}' /vagrant/config/noeuds.yml | while read nom ip; do
+    awk '/- :nom: app[0-9]+/{name=$3} /:ip:/{ip=$2; if(name) print name, ip; name=""}' /vagrant/config/noeuds.yml | while IFS=$'\r\n' read nom ip; do
+        # Nettoyer les retours chariot Windows
+        nom=$(echo "$nom" | tr -d '\r')
+        ip=$(echo "$ip" | tr -d '\r')
         echo "    server $nom $ip:3000 check inter 3s fall 2 rise 2" >> /etc/haproxy/haproxy.cfg
     done
 else

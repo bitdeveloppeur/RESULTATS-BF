@@ -1,7 +1,7 @@
 """Gestion du pool de connexions PostgreSQL"""
 import psycopg2
 from psycopg2 import pool
-from app.config import DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD
+from config import DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD
 
 connection_pool = None
 

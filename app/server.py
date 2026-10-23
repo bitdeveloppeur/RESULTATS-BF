@@ -8,8 +8,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 import uvicorn
 
-from app.database import init_db_pool, close_db_pool
-from app.routes import resultat, sante, info
+from database import init_db_pool, close_db_pool
+from routes import resultat, sante, info
 
 
 @asynccontextmanager

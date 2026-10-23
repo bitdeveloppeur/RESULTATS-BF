@@ -1,7 +1,7 @@
 """Endpoint /resultat"""
 from fastapi import APIRouter, HTTPException, Query, status
-from app.models import Resultat
-from app.database import get_db_connection, release_db_connection
+from models import Resultat
+from database import get_db_connection, release_db_connection
 
 router = APIRouter()
 
