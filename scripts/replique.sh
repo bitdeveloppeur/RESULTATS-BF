@@ -12,10 +12,14 @@ PRIMARY_PORT="5432"
 REPLICATION_USER="replication_user"
 REPLICATION_PASSWORD="changeme_replication"
 
-# 1. Installer PostgreSQL 14
-echo "Installation PostgreSQL 14..."
+# 1. Installer PostgreSQL
+echo "Installation PostgreSQL..."
 apt-get update -qq
 apt-get install -y postgresql postgresql-contrib
+
+# Détecter la version PostgreSQL installée
+PG_VERSION=$(ls /etc/postgresql/)
+echo "PostgreSQL version détectée: ${PG_VERSION}"
 
 # 2. Arrêter PostgreSQL
 echo "Arrêt de PostgreSQL..."
@@ -23,7 +27,7 @@ systemctl stop postgresql
 
 # 3. Nettoyer le répertoire de données
 echo "Nettoyage du répertoire de données..."
-rm -rf /var/lib/postgresql/14/main/*
+rm -rf /var/lib/postgresql/${PG_VERSION}/main/*
 
 # 4. Créer le fichier .pgpass pour l'authentification automatique
 echo "Configuration de l'authentification..."
@@ -37,7 +41,7 @@ chmod 600 /var/lib/postgresql/.pgpass
 echo "Copie initiale depuis bdd1 (cela peut prendre quelques minutes)..."
 sudo -u postgres pg_basebackup \
     -h ${PRIMARY_HOST} \
-    -D /var/lib/postgresql/14/main \
+    -D /var/lib/postgresql/${PG_VERSION}/main \
     -U ${REPLICATION_USER} \
     -v \
     -P \
@@ -48,7 +52,7 @@ sudo -u postgres pg_basebackup \
 
 # 6. Configurer postgresql.conf pour la réplique
 echo "Configuration de la réplique..."
-cat >> /etc/postgresql/14/main/postgresql.conf << EOF
+cat >> /etc/postgresql/${PG_VERSION}/main/postgresql.conf << EOF
 
 # Configuration réplique
 hot_standby = on

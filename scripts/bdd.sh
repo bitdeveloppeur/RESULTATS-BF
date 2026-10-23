@@ -6,8 +6,8 @@ set -e
 
 echo "=== Configuration PostgreSQL primaire (bdd1) ==="
 
-# 1. Installer PostgreSQL 14
-echo "Installation PostgreSQL 14..."
+# 1. Installer PostgreSQL
+echo "Installation PostgreSQL..."
 apt-get update -qq
 apt-get install -y postgresql postgresql-contrib
 
@@ -69,7 +69,7 @@ SELECT COUNT(*) AS nombre_candidats FROM resultats;
 EOF
 
 # 5. Configurer PostgreSQL pour accepter les connexions réseau ET la réplication
-echo "🔧 Configuration des connexions réseau et réplication..."
+echo "Configuration des connexions réseau et réplication..."
 
 # Modifier postgresql.conf pour écouter sur toutes les interfaces
 sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/" /etc/postgresql/*/main/postgresql.conf
