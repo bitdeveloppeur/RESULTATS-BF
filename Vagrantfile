@@ -12,7 +12,7 @@ NB_APP = (ENV['NB_APP'] || 2).to_i  # nombre de serveurs applicatifs
 
 RESEAU = "192.168.#{55 + GROUPE}"
 BOITE = "bento/ubuntu-24.04"
-VERSION = "202404.23.0"
+VERSION = "202404.26.0"  
 
 # Validations
 raise "GROUPE doit être compris entre 1 et 8" unless (1..8).include?(GROUPE)
