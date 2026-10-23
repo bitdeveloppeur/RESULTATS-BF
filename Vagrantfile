@@ -55,8 +55,11 @@ Vagrant.configure("2") do |config|
         vb.cpus = 1
       end
       
-      # Provisionnement (à implémenter)
-      # m.vm.provision "shell", path: "scripts/#{n[:role]}.sh"
+      # Provisionnement : activer seulement si le script existe
+      script_path = "scripts/#{n[:role]}.sh"
+      if File.exist?(script_path)
+        m.vm.provision "shell", path: script_path
+      end
     end
   end
 end
