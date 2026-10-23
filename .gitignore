@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.exemple
+
+# Vagrant
+.vagrant/
+*.log
+
+# Fichiers générés automatiquement
+config/noeuds.yml
