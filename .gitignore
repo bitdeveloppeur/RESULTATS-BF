@@ -8,3 +8,16 @@
 
 # Fichiers générés automatiquement
 config/noeuds.yml
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
