@@ -42,7 +42,7 @@ app.include_router(info.router)
 async def root():
     """Page d'accueil"""
     return {
-        "service": "RÉSULTATS-BF",
+        "service": "RESULTATS-BF",
         "version": "1.0.0",
         "hostname": socket.gethostname(),
         "docs": "/docs"

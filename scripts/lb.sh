@@ -9,8 +9,8 @@ echo "=== Installation HAProxy sur lb1 ==="
 # 1. Mettre à jour les paquets
 apt-get update -qq
 
-# 2. Installer HAProxy
-apt-get install -y haproxy
+# 2. Installer HAProxy et socat (pour la gestion dynamique de l'extension E4)
+apt-get install -y haproxy socat
 
 # 3. Lire la configuration des noeuds depuis le fichier YAML
 # On extrait tous les serveurs applicatifs (role: "app")
