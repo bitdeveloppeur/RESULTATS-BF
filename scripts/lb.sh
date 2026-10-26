@@ -40,7 +40,28 @@ defaults
 # Frontend - Point d'entrée pour les requêtes
 frontend http_front
     bind *:80
+    
+    # Stats dashboard intégré - Accessible sur /haproxy?stats
+    stats enable
+    stats uri /haproxy?stats
+    stats refresh 5s
+    stats show-legends
+    stats show-node
+    stats auth admin:admin123
+    
+    # ACL pour rediriger le trafic normal vers les apps
+    acl is_stats path_beg /haproxy
+    use_backend stats_backend if is_stats
     default_backend app_servers
+
+# Backend pour le dashboard stats
+backend stats_backend
+    stats enable
+    stats uri /haproxy?stats
+    stats refresh 5s
+    stats show-legends
+    stats show-node
+    stats auth admin:admin123
 
 # Backend - Pool de serveurs applicatifs
 backend app_servers

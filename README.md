@@ -8,7 +8,42 @@ Plateforme résiliente et scalable de consultation de résultats d'examens.
 
 ---
 
-## 📋 Description
+## Accès Rapide
+
+| Service | URL | Login |
+|---------|-----|-------|
+| **Frontend Vue.js** | http://localhost:8080 | - |
+| **Dashboard HAProxy** | http://localhost:8080/haproxy?stats | admin / admin123 |
+| **🔧 API Health** | http://localhost:8080/api/sante | - |
+| **🔧 API Résultat** | http://localhost:8080/api/resultat?matricule=000001 | - |
+
+### Tests
+
+#### Tests rapides
+```powershell
+# Tests de base (2 minutes)
+powershell -ExecutionPolicy Bypass -File tests/test-simple.ps1
+```
+
+#### Suite complète (tests unitaires + intégration)
+```powershell
+# Tous les tests avec scénarios V1-V6 (10 minutes)
+powershell -ExecutionPolicy Bypass -File tests/run-all-tests.ps1
+```
+
+### Documentation
+
+| Document | Description |
+|----------|-------------|
+| **[ACCES-RAPIDE.md](ACCES-RAPIDE.md)** | URLs, commandes essentielles, checklist |
+| **[docs/GUIDE-ACCES.md](docs/GUIDE-ACCES.md)** | Guide complet d'accès (frontend, BDD, dashboard, API) |
+| **[docs/GUIDE-DEMONSTRATION.md](docs/GUIDE-DEMONSTRATION.md)** | Scénarios de démonstration V1-V6 pour la soutenance |
+| **[docs/TESTS.md](docs/TESTS.md)** | Documentation des tests unitaires et d'intégration |
+| **[docs/architecture.md](docs/architecture.md)** | Architecture technique détaillée |
+
+---
+
+##  Description
 
 Infrastructure complète pour gérer la publication de résultats d'examens avec deux exigences non fonctionnelles critiques :
 
