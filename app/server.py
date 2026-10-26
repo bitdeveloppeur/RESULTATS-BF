@@ -6,7 +6,10 @@ Rôle : Ingénieur applicatif
 import socket
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 import uvicorn
+import os
 
 from database import init_db_pool, close_db_pool
 from routes import resultat, sante, info
@@ -32,15 +35,22 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# Enregistrement des routes
-app.include_router(resultat.router)
-app.include_router(sante.router)
-app.include_router(info.router)
+# Enregistrement des routes API
+app.include_router(resultat.router, prefix="/api")
+app.include_router(sante.router, prefix="/api")
+app.include_router(info.router, prefix="/api")
 
+# Servir les fichiers statiques (interface web)
+web_dir = os.path.join(os.path.dirname(__file__), "web")
+if os.path.exists(web_dir):
+    app.mount("/static", StaticFiles(directory=web_dir), name="static")
 
 @app.get("/")
 async def root():
-    """Page d'accueil"""
+    """Page d'accueil - Interface Web"""
+    web_file = os.path.join(os.path.dirname(__file__), "web", "index.html")
+    if os.path.exists(web_file):
+        return FileResponse(web_file)
     return {
         "service": "RÉSULTATS-BF",
         "version": "1.0.0",

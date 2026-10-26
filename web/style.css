@@ -1,0 +1,317 @@
+/* RÉSULTATS-BF - Custom Styles - Thème Vert Moutarde */
+
+:root {
+    --primary-color: #6B8E23; /* Vert moutarde foncé */
+    --primary-light: #9ACD32; /* Vert moutarde clair */
+    --success-color: #228B22; /* Vert forêt */
+    --danger-color: #DC143C; /* Rouge */
+    --warning-color: #FFD700; /* Or */
+    --info-color: #20B2AA; /* Turquoise */
+    --gradient-start: #6B8E23;
+    --gradient-end: #556B2F;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    min-height: 100vh;
+    padding-bottom: 60px;
+}
+
+/* Navbar */
+.navbar-primary {
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-light) 100%) !important;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.navbar-brand i {
+    margin-right: 0.5rem;
+}
+
+/* Hero Section */
+.hero-section {
+    background: rgba(255, 255, 255, 0.98);
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    border-bottom: 4px solid var(--primary-color);
+}
+
+.hero-section h1 {
+    font-weight: 700;
+    color: var(--primary-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hero-section .lead {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+/* Cards */
+.card {
+    border-radius: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(107, 142, 35, 0.3) !important;
+}
+
+.card-header {
+    border-radius: 20px 20px 0 0 !important;
+    font-weight: 600;
+}
+
+.bg-success {
+    background-color: var(--success-color) !important;
+}
+
+.bg-danger {
+    background-color: var(--danger-color) !important;
+}
+
+/* Form */
+.input-group-lg .form-control {
+    border-radius: 0;
+    border: 2px solid var(--primary-color);
+}
+
+.input-group-lg .form-control:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 0.25rem rgba(107, 142, 35, 0.25);
+}
+
+.input-group-lg .input-group-text {
+    border-radius: 15px 0 0 15px;
+    background-color: var(--primary-color);
+    color: white;
+    border: 2px solid var(--primary-color);
+    font-weight: 600;
+}
+
+.input-group-lg .btn {
+    border-radius: 0 15px 15px 0;
+    font-weight: 600;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.input-group-lg .btn:hover {
+    background-color: var(--primary-light);
+    border-color: var(--primary-light);
+    transform: scale(1.05);
+}
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-light) !important;
+    border-color: var(--primary-light) !important;
+}
+
+/* Badges */
+.badge {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+.badge.bg-success {
+    background-color: var(--success-color) !important;
+}
+
+.badge.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.badge.bg-info {
+    background-color: var(--info-color) !important;
+}
+
+.badge.bg-warning {
+    background-color: var(--warning-color) !important;
+    color: #333 !important;
+}
+
+.badge.bg-danger {
+    background-color: var(--danger-color) !important;
+}
+
+/* Table */
+.table-hover tbody tr:hover {
+    background-color: rgba(107, 142, 35, 0.08);
+    cursor: pointer;
+}
+
+.table thead {
+    font-weight: 600;
+    background-color: rgba(107, 142, 35, 0.1);
+}
+
+.table-light {
+    background-color: rgba(107, 142, 35, 0.05) !important;
+}
+
+/* Loading Spinner */
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.4rem;
+    border-color: var(--primary-color);
+    border-right-color: transparent;
+}
+
+/* Alert */
+.alert {
+    border-radius: 15px;
+    border: none;
+    font-weight: 500;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.alert-danger {
+    background-color: #ffe6e6;
+    color: var(--danger-color);
+}
+
+/* Result Badge */
+.bg-success.bg-opacity-10 {
+    border: 4px solid var(--success-color);
+    background: linear-gradient(135deg, rgba(34, 139, 34, 0.1) 0%, rgba(34, 139, 34, 0.05) 100%);
+}
+
+.bg-danger.bg-opacity-10 {
+    border: 4px solid var(--danger-color);
+    background: linear-gradient(135deg, rgba(220, 20, 60, 0.1) 0%, rgba(220, 20, 60, 0.05) 100%);
+}
+
+.text-success {
+    color: var(--success-color) !important;
+}
+
+.text-danger {
+    color: var(--danger-color) !important;
+}
+
+/* System Info Card */
+.card.bg-light {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(107, 142, 35, 0.05) 100%) !important;
+    border: 2px solid rgba(107, 142, 35, 0.2);
+}
+
+/* Footer */
+.footer {
+    margin-top: auto;
+    background: linear-gradient(90deg, var(--gradient-end) 0%, var(--gradient-start) 100%) !important;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Icon Animations */
+.bi-check-circle-fill,
+.bi-x-circle-fill {
+    font-size: 4rem;
+    animation: scaleIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0) rotate(-180deg);
+    }
+    to {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* Status indicator */
+.bi-circle-fill {
+    font-size: 0.7rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/* Award icon in hero */
+.bi-award {
+    color: var(--warning-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-section .lead {
+        font-size: 1rem;
+    }
+    
+    .input-group-lg {
+        flex-direction: column;
+    }
+    
+    .input-group-lg .form-control,
+    .input-group-lg .btn {
+        border-radius: 15px !important;
+        margin-bottom: 10px;
+    }
+    
+    .input-group-lg .input-group-text {
+        border-radius: 15px !important;
+    }
+}
+
+/* Additional visual enhancements */
+.card-title {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.form-text {
+    color: #666;
+    font-size: 0.875rem;
+}
+
+/* Search card special styling */
+.card.shadow-lg {
+    box-shadow: 0 10px 40px rgba(107, 142, 35, 0.2) !important;
+}
+
+/* Smooth transitions */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

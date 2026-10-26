@@ -20,6 +20,10 @@ cd /opt/resultats-bf
 echo " Copie de l'application..."
 cp -r /vagrant/app /opt/resultats-bf/
 
+# 3b. Copier l'interface web depuis /vagrant/web
+echo " Copie de l'interface web..."
+cp -r /vagrant/web /opt/resultats-bf/app/
+
 # 4. Créer un virtual env et installer les dépendances
 echo "Installation des dépendances Python..."
 python3 -m venv /opt/resultats-bf/venv

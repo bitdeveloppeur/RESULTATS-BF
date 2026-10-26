@@ -46,10 +46,10 @@ frontend http_front
 backend app_servers
     balance roundrobin
     
-    # Sonde de santé : teste GET /sante toutes les 3 secondes
+    # Sonde de santé : teste GET /api/sante toutes les 3 secondes
     # Si 2 échecs consécutifs, le serveur est écarté
     # Si 2 succès consécutifs, le serveur est remis en service
-    option httpchk GET /sante
+    option httpchk GET /api/sante
     http-check expect status 200
     
 EOF
