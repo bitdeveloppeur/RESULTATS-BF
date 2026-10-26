@@ -6,6 +6,15 @@ set -e  # Arrêter le script si une commande échoue
 
 echo "=== Installation HAProxy sur lb1 ==="
 
+# Charger les variables d'environnement depuis .env
+if [ -f /vagrant/.env ]; then
+    export $(grep -v '^#' /vagrant/.env | xargs)
+fi
+
+# Utiliser les variables d'environnement avec fallback
+HAPROXY_USER=${LB_STATS_USER:-admin}
+HAPROXY_PASS=${LB_STATS_PASSWORD:-changeme_lb_password}
+
 # 1. Mettre à jour les paquets
 apt-get update -qq
 
@@ -47,7 +56,7 @@ frontend http_front
     stats refresh 5s
     stats show-legends
     stats show-node
-    stats auth admin:admin123
+    stats auth $HAPROXY_USER:$HAPROXY_PASS
     
     # ACL pour rediriger le trafic normal vers les apps
     acl is_stats path_beg /haproxy
@@ -61,7 +70,7 @@ backend stats_backend
     stats refresh 5s
     stats show-legends
     stats show-node
-    stats auth admin:admin123
+    stats auth $HAPROXY_USER:$HAPROXY_PASS
 
 # Backend - Pool de serveurs applicatifs
 backend app_servers

@@ -9,6 +9,10 @@ Write-Host ""
 $SUCCESS = 0
 $FAILED = 0
 
+# Charger les credentials depuis .env ou utiliser les valeurs par défaut
+$LB_STATS_USER = if ($env:LB_STATS_USER) { $env:LB_STATS_USER } else { "admin" }
+$LB_STATS_PASSWORD = if ($env:LB_STATS_PASSWORD) { $env:LB_STATS_PASSWORD } else { "changeme_lb_password" }
+
 function Test-Success {
     param([string]$Description)
     Write-Host "[OK] $Description" -ForegroundColor Green
@@ -74,7 +78,7 @@ try {
 # Test 5: Dashboard HAProxy
 Write-Host "`n5. Test Dashboard HAProxy..." -ForegroundColor Yellow
 try {
-    $dashboard = curl.exe -s -u admin:admin123 "http://localhost:8080/haproxy?stats"
+    $dashboard = curl.exe -s -u "${LB_STATS_USER}:${LB_STATS_PASSWORD}" "http://localhost:8080/haproxy?stats"
     if ($dashboard -like "*HAProxy*") {
         Test-Success "Dashboard HAProxy accessible"
     } else {

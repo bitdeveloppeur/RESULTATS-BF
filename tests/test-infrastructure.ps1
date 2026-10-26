@@ -9,6 +9,10 @@ Write-Host ""
 $SUCCESS = 0
 $FAILED = 0
 
+# Charger les credentials depuis .env ou utiliser les valeurs par défaut
+$LB_STATS_USER = if ($env:LB_STATS_USER) { $env:LB_STATS_USER } else { "admin" }
+$LB_STATS_PASSWORD = if ($env:LB_STATS_PASSWORD) { $env:LB_STATS_PASSWORD } else { "changeme_lb_password" }
+
 function Test-Result {
     param(
         [bool]$Result,
@@ -153,7 +157,7 @@ Test-Result ($unique.Count -gt 1) "Requêtes distribuées entre app1 et app2"
 Write-Host "`n📋 Test 10: Dashboard HAProxy" -ForegroundColor Yellow
 Write-Host "=============================" -ForegroundColor Yellow
 try {
-    $dashboard = curl.exe -s "http://localhost:8080/haproxy?stats" -u "admin:admin123"
+    $dashboard = curl.exe -s "http://localhost:8080/haproxy?stats" -u "${LB_STATS_USER}:${LB_STATS_PASSWORD}"
     Test-Result ($dashboard -like "*HAProxy*Statistics*") "Dashboard HAProxy accessible"
 } catch {
     Test-Result $false "Dashboard HAProxy accessible"
