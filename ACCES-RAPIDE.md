@@ -5,7 +5,7 @@
 | Service | URL | Login |
 |---------|-----|-------|
 | **Frontend Vue.js** | http://localhost:8080 | - |
-| **Dashboard HAProxy** | http://localhost:8080/haproxy?stats | admin / admin123 |
+| **Dashboard HAProxy** | http://localhost:8080/haproxy?stats | Voir `.env` (LB_STATS_USER / LB_STATS_PASSWORD) |
 | **API Health Check** | http://localhost:8080/api/sante | - |
 | **API Résultat** | http://localhost:8080/api/resultat?matricule=000001 | - |
 
@@ -151,7 +151,7 @@ vagrant up
 
 - [ ] `vagrant status` → toutes les VMs "running"
 - [ ] http://localhost:8080 → Frontend s'affiche
-- [ ] http://localhost:8080/haproxy?stats → Dashboard accessible (admin/admin123)
+- [ ] http://localhost:8080/haproxy?stats → Dashboard accessible (credentials dans `.env`)
 - [ ] `curl.exe http://localhost:8080/api/sante` → {"status":"healthy"}
 - [ ] 50 000 résultats en BDD
 - [ ] VIP active (lb1 ou lb2)

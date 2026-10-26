@@ -49,8 +49,7 @@ powershell -ExecutionPolicy Bypass -File tests/test-simple.ps1
 **Dans ton navigateur, va sur:** http://localhost:8080/haproxy?stats
 
 **Login:**
-- Username: `admin`
-- Password: `admin123`
+- Utiliser les credentials définis dans `.env` (LB_STATS_USER / LB_STATS_PASSWORD)
 
 **Ce que tu verras:**
 - **État des serveurs** (app1, app2): UP 🟢 ou DOWN 🔴

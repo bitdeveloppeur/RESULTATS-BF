@@ -149,7 +149,7 @@ if ($FAILED -eq 0) {
     Write-Host ""
     Write-Host "Accès:" -ForegroundColor Cyan
     Write-Host "  Frontend:  http://localhost:8080" -ForegroundColor White
-    Write-Host "  Dashboard: http://localhost:8080/haproxy?stats (admin/admin123)" -ForegroundColor White
+    Write-Host "  Dashboard: http://localhost:8080/haproxy?stats (voir .env)" -ForegroundColor White
     Write-Host "  API:       http://localhost:8080/api/resultat?matricule=000001" -ForegroundColor White
     Write-Host ""
     Write-Host "Ouvre ton navigateur sur http://localhost:8080 pour voir l'interface!" -ForegroundColor Yellow

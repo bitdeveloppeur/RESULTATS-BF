@@ -13,7 +13,7 @@ Plateforme résiliente et scalable de consultation de résultats d'examens.
 | Service | URL | Login |
 |---------|-----|-------|
 | **Frontend Vue.js** | http://localhost:8080 | - |
-| **Dashboard HAProxy** | http://localhost:8080/haproxy?stats | admin / admin123 |
+| **Dashboard HAProxy** | http://localhost:8080/haproxy?stats | Voir `.env` (LB_STATS_USER / LB_STATS_PASSWORD) |
 | **🔧 API Health** | http://localhost:8080/api/sante | - |
 | **🔧 API Résultat** | http://localhost:8080/api/resultat?matricule=000001 | - |
 

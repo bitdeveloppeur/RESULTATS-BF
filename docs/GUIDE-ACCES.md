@@ -104,8 +104,7 @@ Si tu veux utiliser **pgAdmin** ou **DBeaver** depuis Windows:
 
 ### Accès
 - **URL**: http://localhost:8080/haproxy?stats
-- **Username**: `admin`
-- **Password**: `admin123`
+- **Credentials**: Définis dans `.env` (variables LB_STATS_USER et LB_STATS_PASSWORD)
 
 ### Ce que tu peux voir
 - ✅ **État des serveurs** (app1, app2): UP/DOWN
