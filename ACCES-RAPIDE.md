@@ -1,4 +1,4 @@
-# 🎯 ACCÈS RAPIDE - RÉSULTATS-BF
+#  ACCÈS RAPIDE - RÉSULTATS-BF
 
 ##  URLs à retenir
 

@@ -4,7 +4,7 @@ Plateforme résiliente et scalable de consultation de résultats d'examens.
 
 **Projet académique** - Master 1 Informatique - Module DevOps et infrastructures reproductibles  
 **Université Joseph Ki Zerbo - IBAM**  
-**Groupe 8** - Réseau 192.168.63.0/24
+**Groupe 16** - Réseau 192.168.63.0/24
 
 ---
 
