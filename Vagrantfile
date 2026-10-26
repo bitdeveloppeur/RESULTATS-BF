@@ -48,8 +48,7 @@ Vagrant.configure("2") do |config|
       m.vm.network "private_network", ip: n[:ip]
       
       # Port forwarding uniquement pour le load balancer
-      # m.vm.network "forwarded_port", guest: 80, host: 8080 if n[:role] == "lb"
-      m.vm.network "forwarded_port", guest: 80, host: 8088, auto_correct: true if n[:role] == "lb"
+      m.vm.network "forwarded_port", guest: 80, host: 8080 if n[:role] == "lb"
       
       m.vm.provider "virtualbox" do |vb|
         vb.memory = n[:mem]

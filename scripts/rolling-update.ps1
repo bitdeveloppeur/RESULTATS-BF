@@ -33,10 +33,10 @@ Write-Host "------------------------------------------------------------------"
 
 # 2. Verifier la version actuelle avant le deploiement
 try {
-    $before = Invoke-RestMethod -Uri "http://localhost:8088/" -TimeoutSec 3 -ErrorAction SilentlyContinue
+    $before = Invoke-RestMethod -Uri "http://localhost:8080/" -TimeoutSec 3 -ErrorAction SilentlyContinue
     Write-Host "Version actuelle en production : $($before.version)" -ForegroundColor Green
 } catch {
-    Write-Host "Impossible de contacter http://localhost:8088/ (verifiez si lb1 est demarre)" -ForegroundColor Red
+    Write-Host "Impossible de contacter http://localhost:8080/ (verifiez si lb1 est demarre)" -ForegroundColor Red
 }
 
 $startTime = Get-Date
@@ -95,7 +95,7 @@ $elapsed = [Math]::Round(((Get-Date) - $startTime).TotalSeconds, 1)
 Write-Host "`n------------------------------------------------------------------"
 Write-Host "Verification finale apres deploiement :" -ForegroundColor Cyan
 try {
-    $after = Invoke-RestMethod -Uri "http://localhost:8088/" -TimeoutSec 3
+    $after = Invoke-RestMethod -Uri "http://localhost:8080/" -TimeoutSec 3
     Write-Host "Service : $($after.service)" -ForegroundColor Green
     Write-Host "Nouvelle version : $($after.version)" -ForegroundColor Green
 } catch {
