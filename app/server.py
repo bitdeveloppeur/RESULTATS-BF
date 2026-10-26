@@ -52,7 +52,7 @@ async def root():
     if os.path.exists(web_file):
         return FileResponse(web_file)
     return {
-        "service": "RÉSULTATS-BF",
+        "service": "RESULTATS-BF",
         "version": "1.0.0",
         "hostname": socket.gethostname(),
         "docs": "/docs"
