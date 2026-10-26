@@ -86,6 +86,48 @@ systemctl restart haproxy
 # 8. Vérifier le statut
 systemctl status haproxy --no-pager
 
+
+# ============================================================
+# E1 — Keepalived : VIP partagée entre lb1 (MASTER) et lb2 (BACKUP)
+# ============================================================
+echo "=== Configuration Keepalived (VRRP) ==="
+
+apt-get install -y keepalived
+
+HOST=$(hostname)
+if [ "$HOST" = "lb1" ]; then
+    STATE="MASTER"
+    PRIORITY=100
+else
+    STATE="BACKUP"
+    PRIORITY=90
+fi
+
+# Détection auto de l'interface du réseau privé
+IFACE=$(ip -o -4 addr show | grep "192.168.63" | awk '{print $2}' | head -1)
+echo "Interface détectée : $IFACE"
+
+cat > /etc/keepalived/keepalived.conf <<EOF
+vrrp_instance VI_1 {
+    state $STATE
+    interface $IFACE
+    virtual_router_id 51
+    priority $PRIORITY
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass ResultatsBF2026
+    }
+    virtual_ipaddress {
+        192.168.63.10/24
+    }
+}
+EOF
+
+systemctl enable keepalived
+systemctl restart keepalived
+echo "Keepalived démarré en $STATE sur $HOST (VIP = 192.168.63.10)"
+
 echo "=== HAProxy installé et configuré avec succès ==="
 echo "Accès web : http://192.168.63.11"
 echo "Depuis l'hôte : http://localhost:8080"

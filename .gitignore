@@ -1,6 +1,6 @@
 .env
 .env.*
-!.env.exemple
+!.env.example
 
 # Vagrant
 .vagrant/
