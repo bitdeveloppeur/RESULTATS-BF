@@ -8,7 +8,7 @@ Le projet comprend **deux niveaux de tests** :
 
 ---
 
-## 🧪 Tests Unitaires
+##  Tests Unitaires
 
 ### Description
 Les tests unitaires vérifient que chaque composant fonctionne correctement de manière isolée.
@@ -39,43 +39,43 @@ powershell -ExecutionPolicy Bypass -File tests/unit/test-database.ps1
 ### Couverture des tests unitaires
 
 #### 1. Infrastructure (`test-infrastructure.ps1`)
-- ✅ État des 6 VMs (running/stopped)
-- ✅ Services HAProxy actifs sur lb1 et lb2
-- ✅ Services Keepalived actifs (VRRP)
-- ✅ VIP 192.168.63.10 active
-- ✅ Services FastAPI actifs sur app1 et app2
-- ✅ Ports réseau ouverts (80, 3000, 5432)
-- ✅ Fichiers de configuration présents
+-  État des 6 VMs (running/stopped)
+-  Services HAProxy actifs sur lb1 et lb2
+- Services Keepalived actifs (VRRP)
+-  VIP 192.168.63.10 active
+- Services FastAPI actifs sur app1 et app2
+-  Ports réseau ouverts (80, 3000, 5432)
+-  Fichiers de configuration présents
 
 **Résultat attendu:** ~14 tests PASS
 
 #### 2. API (`test-api.ps1`)
-- ✅ Endpoint root `/` retourne HTML valide
-- ✅ Endpoint `/api/sante` retourne status healthy
-- ✅ Connexion base de données OK
-- ✅ Hostname valide (app1 ou app2)
-- ✅ Endpoint `/api/resultat?matricule=X` retourne données
-- ✅ Structure JSON valide (matricule, nom, série, moyenne, admis)
-- ✅ Code HTTP 404 pour matricule inexistant
-- ✅ Temps de réponse < 500ms
+-  Endpoint root `/` retourne HTML valide
+-  Endpoint `/api/sante` retourne status healthy
+-  Connexion base de données OK
+-  Hostname valide (app1 ou app2)
+- Endpoint `/api/resultat?matricule=X` retourne données
+-  Structure JSON valide (matricule, nom, série, moyenne, admis)
+-  Code HTTP 404 pour matricule inexistant
+- Temps de réponse < 500ms
 
 **Résultat attendu:** ~10 tests PASS
 
 #### 3. Base de données (`test-database.ps1`)
-- ✅ Service PostgreSQL actif
-- ✅ Base `resultats_bf` existe
-- ✅ Table `resultats` existe
-- ✅ 50 000 lignes en base
-- ✅ Colonnes requises présentes
-- ✅ Séries valides (A, C, D)
-- ✅ Moyennes dans [0, 20]
-- ✅ Réplication configurée
+-  Service PostgreSQL actif
+-  Base `resultats_bf` existe
+-  Table `resultats` existe
+-  50 000 lignes en base
+-  Colonnes requises présentes
+- Séries valides (A, C, D)
+- Moyennes dans [0, 20]
+- Réplication configurée
 
 **Résultat attendu:** ~8 tests PASS
 
 ---
 
-## 🔗 Tests d'Intégration
+##  Tests d'Intégration
 
 ### Description
 Les tests d'intégration valident les **6 scénarios de validation (V1-V6)** demandés dans le cahier des charges.
@@ -94,7 +94,7 @@ tests/integration/
 powershell -ExecutionPolicy Bypass -File tests/integration/test-scenarios.ps1
 ```
 
-⚠️ **Attention:** Les tests d'intégration :
+ **Attention:** Les tests d'intégration :
 - Modifient l'état de l'infrastructure
 - Arrêtent/redémarrent des VMs
 - Prennent 5-10 minutes
@@ -175,7 +175,7 @@ powershell -ExecutionPolicy Bypass -File tests/integration/test-scenarios.ps1
 
 ---
 
-## 🚀 Lancer tous les tests
+## Lancer tous les tests
 
 ### Script maître
 
@@ -221,10 +221,10 @@ Tests réussis: 8
 └──────────────────────────────────────────┘
 
 V1: RÉPARTITION
-✅ PASS - Écart: 10%
+ PASS - Écart: 10%
 
 V2: PANNE SERVEUR
-✅ PASS - Durée: 6s
+ PASS - Durée: 6s
 
 ...
 
@@ -232,14 +232,14 @@ V2: PANNE SERVEUR
       RAPPORT FINAL - TOUS LES TESTS     
 ==========================================
 
-🎉 TOUS LES TESTS SONT PASSÉS! ✅
+ TOUS LES TESTS SONT PASSÉS! 
 
 Infrastructure prête pour la démonstration!
 ```
 
 ---
 
-## 📊 Métriques et KPIs
+##  Métriques et KPIs
 
 ### Performance
 - **Temps de réponse API:** < 500ms (moyen: ~50ms)
@@ -287,7 +287,7 @@ powershell tests/run-all-tests.ps1
 
 ---
 
-## 📝 Rapport de tests
+##  Rapport de tests
 
 Après chaque exécution des tests d'intégration, un rapport est généré :
 
@@ -300,11 +300,6 @@ Ce rapport contient :
 - Mesures effectuées
 - Détails des résultats
 
-**Utilisez ce rapport pour votre soutenance !**
-
----
-
-## ✅ Checklist avant démonstration
 
 ```powershell
 # 1. Lancer tous les tests
@@ -320,4 +315,3 @@ curl.exe http://localhost:8080/api/sante
 start http://localhost:8080/haproxy?stats
 ```
 
-Si tous les tests passent → **Vous êtes prêt pour la démonstration ! 🎉**

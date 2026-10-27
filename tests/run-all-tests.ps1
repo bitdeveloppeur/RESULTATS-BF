@@ -47,7 +47,7 @@ Write-Host "│    (Scénarios V1-V6)                    │" -ForegroundColor Y
 Write-Host "└──────────────────────────────────────────┘" -ForegroundColor Yellow
 Write-Host ""
 
-Write-Host "⚠️  Les tests d'intégration vont:" -ForegroundColor Yellow
+Write-Host "  Les tests d'intégration vont:" -ForegroundColor Yellow
 Write-Host "   - Arrêter/redémarrer des VMs" -ForegroundColor Yellow
 Write-Host "   - Prendre 5-10 minutes" -ForegroundColor Yellow
 Write-Host "   - Modifier l'état de l'infrastructure" -ForegroundColor Yellow
@@ -80,7 +80,7 @@ Write-Host ""
 
 if ($allPassed) {
     Write-Host "════════════════════════════════════════" -ForegroundColor Green
-    Write-Host "  🎉 TOUS LES TESTS SONT PASSÉS! ✅    " -ForegroundColor Green
+    Write-Host "   TOUS LES TESTS SONT PASSÉS! ✅    " -ForegroundColor Green
     Write-Host "════════════════════════════════════════" -ForegroundColor Green
     Write-Host ""
     Write-Host "Infrastructure prête pour la démonstration!" -ForegroundColor Green
@@ -92,7 +92,7 @@ if ($allPassed) {
     exit 0
 } else {
     Write-Host "════════════════════════════════════════" -ForegroundColor Yellow
-    Write-Host "  ⚠️  CERTAINS TESTS ONT ÉCHOUÉ        " -ForegroundColor Yellow
+    Write-Host "  ⚠️ CERTAINS TESTS ONT ÉCHOUÉ        " -ForegroundColor Yellow
     Write-Host "════════════════════════════════════════" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "Vérifiez les logs ci-dessus pour plus de détails" -ForegroundColor Yellow

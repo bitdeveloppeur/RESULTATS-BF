@@ -63,13 +63,13 @@ if ($counts.Count -ge 2) {
     Write-Host "`nÉcart: $ecart%" -ForegroundColor $(if ($ecart -lt 20) { "Green" } else { "Red" })
     
     if ($ecart -lt 20) {
-        Record-Result "V1" "✅ PASS" "Écart: $ecart%" "Load balancing équilibré"
+        Record-Result "V1" " PASS" "Écart: $ecart%" "Load balancing équilibré"
     } else {
-        Record-Result "V1" "⚠️ WARN" "Écart: $ecart%" "Distribution déséquilibrée"
+        Record-Result "V1" " WARN" "Écart: $ecart%" "Distribution déséquilibrée"
     }
 } else {
     Write-Host "  Un seul serveur répond!" -ForegroundColor Red
-    Record-Result "V1" "❌ FAIL" "N/A" "Un seul serveur actif"
+    Record-Result "V1" " FAIL" "N/A" "Un seul serveur actif"
 }
 
 # ========================================
@@ -114,9 +114,9 @@ Write-Host "  Durée période dégradée: $degradedTime s" -ForegroundColor Whit
 Write-Host "  Taux d'erreur: $errorRate %" -ForegroundColor White
 
 if ($degradedTime -le 10) {
-    Record-Result "V2" "✅ PASS" "Durée: $degradedTime s" "Détection et bascule rapides"
+    Record-Result "V2" " PASS" "Durée: $degradedTime s" "Détection et bascule rapides"
 } else {
-    Record-Result "V2" "⚠️ WARN" "Durée: $degradedTime s" "Détection plus lente qu'attendu"
+    Record-Result "V2" " WARN" "Durée: $degradedTime s" "Détection plus lente qu'attendu"
 }
 
 Write-Host "`nRedémarrage app1..." -ForegroundColor Gray
@@ -151,9 +151,9 @@ Write-Host "  Durée totale: $([math]::Round($duration, 2)) s" -ForegroundColor 
 Write-Host "  Requêtes/seconde: $rps req/s" -ForegroundColor White
 
 if ($rps -gt 50) {
-    Record-Result "V3" "✅ PASS" "Débit: $rps req/s" "Performance acceptable"
+    Record-Result "V3" " PASS" "Débit: $rps req/s" "Performance acceptable"
 } else {
-    Record-Result "V3" "⚠️ WARN" "Débit: $rps req/s" "Performance faible"
+    Record-Result "V3" " WARN" "Débit: $rps req/s" "Performance faible"
 }
 
 # ========================================
@@ -175,13 +175,13 @@ $response = curl.exe -s -w "%{http_code}" http://localhost:8080/api/sante -o nul
 Write-Host "`nRésultat:" -ForegroundColor Cyan
 if ($response -match "503" -or $response -match "500") {
     Write-Host "  Code HTTP: $response (erreur propre)" -ForegroundColor Green
-    Record-Result "V4" "✅ PASS" "HTTP $response" "Erreur gérée proprement (pas de page blanche)"
+    Record-Result "V4" " PASS" "HTTP $response" "Erreur gérée proprement (pas de page blanche)"
 } elseif ($response -match "200") {
     Write-Host "  Code HTTP: 200 (connexion fallback?)" -ForegroundColor Yellow
-    Record-Result "V4" "⚠️ WARN" "HTTP 200" "API répond malgré panne BDD"
+    Record-Result "V4" " WARN" "HTTP 200" "API répond malgré panne BDD"
 } else {
     Write-Host "  Code HTTP: $response" -ForegroundColor Red
-    Record-Result "V4" "❌ FAIL" "HTTP $response" "Réponse inattendue"
+    Record-Result "V4" " FAIL" "HTTP $response" "Réponse inattendue"
 }
 
 Write-Host "`nRedémarrage bdd1..." -ForegroundColor Gray
@@ -195,7 +195,7 @@ Start-Sleep -Seconds 40
 Write-Host "`n========================================" -ForegroundColor Yellow
 Write-Host "V5: RECONSTRUCTION - destroy + up" -ForegroundColor Yellow
 Write-Host "========================================" -ForegroundColor Yellow
-Write-Host "⚠️  CE TEST EST DESTRUCTIF ET LONG (8-10 min)" -ForegroundColor Red
+Write-Host "  CE TEST EST DESTRUCTIF ET LONG (8-10 min)" -ForegroundColor Red
 Write-Host "Voulez-vous l'exécuter? (o/N)" -ForegroundColor Yellow
 $confirm = Read-Host
 
@@ -218,13 +218,13 @@ if ($confirm -eq "o" -or $confirm -eq "O") {
     $testHealth = curl.exe -s http://localhost:8080/api/sante 2>$null
     
     if ($testHealth -like "*healthy*") {
-        Record-Result "V5" "✅ PASS" "Durée: $rebuildTime min" "Infrastructure fonctionnelle"
+        Record-Result "V5" " PASS" "Durée: $rebuildTime min" "Infrastructure fonctionnelle"
     } else {
-        Record-Result "V5" "❌ FAIL" "Durée: $rebuildTime min" "Infrastructure non fonctionnelle"
+        Record-Result "V5" " FAIL" "Durée: $rebuildTime min" "Infrastructure non fonctionnelle"
     }
 } else {
     Write-Host "Test V5 ignoré (trop long)" -ForegroundColor Yellow
-    Record-Result "V5" "⏭️  SKIP" "N/A" "Test ignoré par l'utilisateur"
+    Record-Result "V5" "⏭  SKIP" "N/A" "Test ignoré par l'utilisateur"
 }
 
 # ========================================
@@ -251,13 +251,13 @@ $apiTest = curl.exe -s http://localhost:8080/api/sante 2>$null
 
 Write-Host "`nRésultat:" -ForegroundColor Cyan
 if ($vip2After -and $apiTest -like "*healthy*") {
-    Write-Host "  VIP basculée sur lb2: ✅" -ForegroundColor Green
-    Write-Host "  API accessible: ✅" -ForegroundColor Green
-    Record-Result "V6" "✅ PASS" "Bascule < 5s" "Haute disponibilité fonctionnelle"
+    Write-Host "  VIP basculée sur lb2: " -ForegroundColor Green
+    Write-Host "  API accessible: " -ForegroundColor Green
+    Record-Result "V6" " PASS" "Bascule < 5s" "Haute disponibilité fonctionnelle"
 } else {
-    Write-Host "  VIP basculée: $(if($vip2After){'✅'}else{'❌'})" -ForegroundColor $(if($vip2After){"Green"}else{"Red"})
-    Write-Host "  API accessible: $(if($apiTest){'✅'}else{'❌'})" -ForegroundColor $(if($apiTest){"Green"}else{"Red"})
-    Record-Result "V6" "❌ FAIL" "N/A" "Bascule VRRP échouée"
+    Write-Host "  VIP basculée: $(if($vip2After){''}else{'❌'})" -ForegroundColor $(if($vip2After){"Green"}else{"Red"})
+    Write-Host "  API accessible: $(if($apiTest){''}else{'❌'})" -ForegroundColor $(if($apiTest){"Green"}else{"Red"})
+    Record-Result "V6" " FAIL" "N/A" "Bascule VRRP échouée"
 }
 
 Write-Host "`nRedémarrage lb1..." -ForegroundColor Gray
@@ -285,9 +285,9 @@ $RESULTS | Out-File -FilePath $reportPath
 Write-Host "`nRapport sauvegardé: $reportPath" -ForegroundColor Cyan
 
 if ($passed -eq $total) {
-    Write-Host "`n🎉 Tous les scénarios d'intégration sont validés!" -ForegroundColor Green
+    Write-Host "`n Tous les scénarios d'intégration sont validés!" -ForegroundColor Green
     exit 0
 } else {
-    Write-Host "`n⚠️  Certains scénarios nécessitent attention" -ForegroundColor Yellow
+    Write-Host "`n Certains scénarios nécessitent attention" -ForegroundColor Yellow
     exit 1
 }

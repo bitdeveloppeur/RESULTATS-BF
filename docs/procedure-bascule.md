@@ -1,31 +1,31 @@
-# 🔄 Procédure de bascule PostgreSQL (Failover)
+# Procédure de bascule PostgreSQL (Failover)
 
-## 🎯 Objectif
+## Objectif
 
 Promouvoir **bdd2** (réplique) en **primaire** lorsque **bdd1** tombe en panne.
 
 ---
 
-## 📊 Situation avant bascule
+## Situation avant bascule
 
 ```
 bdd1 (primaire)  →  bdd2 (réplique)
 192.168.63.31        192.168.63.32
 Lecture + Écriture   Lecture seule
-      ❌ PANNE!           ✅ OK
+      PANNE!            OK
 ```
 
-## 📊 Situation après bascule
+## Situation après bascule
 
 ```
 bdd1 (arrêtée)      bdd2 (promue primaire)
 192.168.63.31        192.168.63.32
-     ❌                Lecture + Écriture
+                    Lecture + Écriture
 ```
 
 ---
 
-## ⚠️ Quand effectuer la bascule ?
+## Quand effectuer la bascule ?
 
 **Cas d'usage** :
 - bdd1 ne répond plus
@@ -40,7 +40,7 @@ bdd1 (arrêtée)      bdd2 (promue primaire)
 
 ---
 
-## 🛠️ Procédure de bascule (étape par étape)
+##  Procédure de bascule (étape par étape)
 
 ### Étape 1 : Se connecter à bdd2
 
@@ -87,7 +87,7 @@ SELECT * FROM resultats WHERE matricule = '999999';
 EOF
 ```
 
-**Si ça marche** : bdd2 est maintenant primaire ! ✅
+**Si ça marche** : bdd2 est maintenant primaire ! 
 
 ### Étape 6 : Reconfigurer l'application pour pointer vers bdd2
 
@@ -129,11 +129,11 @@ curl http://localhost:8080/resultat?matricule=000001
 | Redémarrage des apps | ~5 secondes |
 | **Total** | **~12 secondes** |
 
-**Exigence R6** : Procédure de bascule exécutable et chronométrée ✅
+**Exigence R6** : Procédure de bascule exécutable et chronométrée 
 
 ---
 
-## 🔄 Procédure de retour (Failback)
+##  Procédure de retour (Failback)
 
 **Quand bdd1 est réparée** et qu'on veut la remettre en primaire :
 
@@ -168,7 +168,7 @@ Refaire une bascule, mais dans l'autre sens !
 
 ---
 
-## 🧪 Script de test de bascule
+## Script de test de bascule
 
 ```bash
 #!/bin/bash
@@ -205,20 +205,20 @@ echo "5. Test final..."
 curl http://localhost:8080/sante
 curl http://localhost:8080/resultat?matricule=000001
 
-echo "✅ Bascule terminée !"
+echo " Bascule terminée !"
 ```
 
 ---
 
-## 📊 Points d'attention
+## Points d'attention
 
-### ⚠️ Split-brain (scénario catastrophe)
+### Split-brain (scénario catastrophe)
 
 **Problème** : Si bdd1 revient en ligne ET que bdd2 est déjà promue, on a **2 primaires** !
 
 **Solution** : S'assurer que bdd1 est bien arrêtée avant de promouvoir bdd2.
 
-### ⚠️ Lag de réplication
+### Lag de réplication
 
 Si bdd2 est en retard sur bdd1 :
 - Certaines écritures récentes sur bdd1 peuvent être perdues
@@ -235,7 +235,7 @@ SELECT
 
 ---
 
-## ✅ Checklist de bascule
+## Checklist de bascule
 
 - [ ] bdd1 est inaccessible (confirmé)
 - [ ] bdd2 est synchronisée (lag < 1 seconde)
@@ -249,7 +249,7 @@ SELECT
 
 ---
 
-## 📚 Commandes utiles
+## Commandes utiles
 
 ```bash
 # Vérifier le statut de réplication sur bdd1 (primaire)
@@ -270,4 +270,3 @@ sudo -u postgres pg_ctl promote -D /var/lib/postgresql/14/main
 
 ---
 
-**Temps estimé de la procédure** : ~2 minutes (manuel) ou ~15 secondes (script automatisé)

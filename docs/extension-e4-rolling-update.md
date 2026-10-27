@@ -24,7 +24,7 @@ Prouver que l'on peut déployer une nouvelle version de l'application (passer de
    *(Toutes les machines `bdd1`, `bdd2`, `app1`, `app2` et `lb1` doivent être en statut `running`).*
 
 2. L'accès au site fonctionne sur votre machine hôte :  
-   👉 **http://localhost:8088/**
+   **http://localhost:8088/**
 
 ---
 
@@ -85,7 +85,7 @@ Lancez un flux continu de requêtes pour simuler des candidats qui chargent le s
   while ($true) { curl.exe -s http://localhost:8088/ ; Start-Sleep -Milliseconds 150 }
   ```
 
-#### 🚀 Terminal 2 (À droite) : Lancer le Rolling Update
+#### Terminal 2 (À droite) : Lancer le Rolling Update
 Pendant que le Terminal 1 est en train d'envoyer des requêtes, lancez immédiatement dans le Terminal 2 :
 
 ```powershell

@@ -2,7 +2,7 @@
 # Compatible Windows PowerShell
 
 Write-Host "==========================================" -ForegroundColor Cyan
-Write-Host "🧪 TESTS INFRASTRUCTURE RÉSULTATS-BF" -ForegroundColor Cyan
+Write-Host "TESTS INFRASTRUCTURE RÉSULTATS-BF" -ForegroundColor Cyan
 Write-Host "==========================================" -ForegroundColor Cyan
 Write-Host ""
 
@@ -31,7 +31,7 @@ function Test-Result {
 }
 
 # Test 1: Vérification des VMs
-Write-Host "`n📋 Test 1: Vérification des VMs" -ForegroundColor Yellow
+Write-Host "`n Test 1: Vérification des VMs" -ForegroundColor Yellow
 Write-Host "================================" -ForegroundColor Yellow
 $status = vagrant status
 $running = ($status | Select-String "bdd1.*running" | Measure-Object).Count -eq 1 -and `
@@ -43,7 +43,7 @@ $running = ($status | Select-String "bdd1.*running" | Measure-Object).Count -eq 
 Test-Result $running "Toutes les VMs sont en état running"
 
 # Test 2: Connectivité Load Balancer
-Write-Host "`n📋 Test 2: Connectivité Load Balancer" -ForegroundColor Yellow
+Write-Host "`n Test 2: Connectivité Load Balancer" -ForegroundColor Yellow
 Write-Host "=====================================" -ForegroundColor Yellow
 try {
     $response = curl.exe -s http://localhost:8080/api/sante
@@ -53,7 +53,7 @@ try {
 }
 
 # Test 3: Endpoint /api/sante (Health Check)
-Write-Host "`n📋 Test 3: Endpoint /api/sante (Health Check)" -ForegroundColor Yellow
+Write-Host "`n Test 3: Endpoint /api/sante (Health Check)" -ForegroundColor Yellow
 Write-Host "=============================================" -ForegroundColor Yellow
 try {
     $health = curl.exe -s http://localhost:8080/api/sante
@@ -64,8 +64,8 @@ try {
     Test-Result $false "Endpoint /api/sante accessible"
 }
 
-# Test 4: Endpoint /api/resultat (Données étudiant)
-Write-Host "`n📋 Test 4: Endpoint /api/resultat (Données étudiant)" -ForegroundColor Yellow
+# Test 4: Endpoit /api/resultat (Données étudiant)
+Write-Host "`n Test 4: Endpoint /api/resultat (Données étudiant)" -ForegroundColor Yellow
 Write-Host "====================================================" -ForegroundColor Yellow
 try {
     $resultat = curl.exe -s "http://localhost:8080/api/resultat?matricule=000001"
@@ -77,7 +77,7 @@ try {
 }
 
 # Test 5: Interface Vue.js (Frontend)
-Write-Host "`n📋 Test 5: Interface Vue.js (Frontend)" -ForegroundColor Yellow
+Write-Host "`n Test 5: Interface Vue.js (Frontend)" -ForegroundColor Yellow
 Write-Host "======================================" -ForegroundColor Yellow
 try {
     $frontend = curl.exe -s http://localhost:8080/
@@ -88,7 +88,7 @@ try {
 }
 
 # Test 6: Base de données PostgreSQL
-Write-Host "`n📋 Test 6: Base de données PostgreSQL" -ForegroundColor Yellow
+Write-Host "`n Test 6: Base de données PostgreSQL" -ForegroundColor Yellow
 Write-Host "=====================================" -ForegroundColor Yellow
 try {
     $count = vagrant ssh bdd1 -c "sudo -u postgres psql resultats_bf -t -c 'SELECT COUNT(*) FROM resultats;'" 2>$null
@@ -100,7 +100,7 @@ try {
 }
 
 # Test 7: Réplication PostgreSQL
-Write-Host "`n📋 Test 7: Réplication PostgreSQL" -ForegroundColor Yellow
+Write-Host "`n Test 7: Réplication PostgreSQL" -ForegroundColor Yellow
 Write-Host "=================================" -ForegroundColor Yellow
 try {
     $cmd = 'sudo -u postgres psql -t -c "SELECT state FROM pg_stat_replication;"'
@@ -112,8 +112,8 @@ try {
     Test-Result $false "Réplication PostgreSQL"
 }
 
-# Test 8: Haute disponibilité (VIP Keepalived)
-Write-Host "`n📋 Test 8: Haute disponibilité (VIP Keepalived)" -ForegroundColor Yellow
+# Test 8: Haute isponibilité (VIP Keepalived)
+Write-Host "`n Test 8: Haute disponibilité (VIP Keepalived)" -ForegroundColor Yellow
 Write-Host "===============================================" -ForegroundColor Yellow
 try {
     $vip_lb1 = vagrant ssh lb1 -c "ip addr show eth1 | grep 192.168.63.10" 2>$null
@@ -133,7 +133,7 @@ try {
 }
 
 # Test 9: Load Balancing (Round Robin)
-Write-Host "`n📋 Test 9: Load Balancing (Round Robin)" -ForegroundColor Yellow
+Write-Host "`n Test 9: Load Balancing (Round Robin)" -ForegroundColor Yellow
 Write-Host "=======================================" -ForegroundColor Yellow
 $hostnames = @()
 for ($i = 1; $i -le 5; $i++) {
@@ -154,7 +154,7 @@ $unique = $hostnames | Select-Object -Unique
 Test-Result ($unique.Count -gt 1) "Requêtes distribuées entre app1 et app2"
 
 # Test 10: Dashboard HAProxy
-Write-Host "`n📋 Test 10: Dashboard HAProxy" -ForegroundColor Yellow
+Write-Host "`n Test 10: Dashboard HAProxy" -ForegroundColor Yellow
 Write-Host "=============================" -ForegroundColor Yellow
 try {
     $dashboard = curl.exe -s "http://localhost:8080/haproxy?stats" -u "${LB_STATS_USER}:${LB_STATS_PASSWORD}"
@@ -165,7 +165,7 @@ try {
 
 # Résumé
 Write-Host "`n==========================================" -ForegroundColor Cyan
-Write-Host "📊 RÉSUMÉ DES TESTS" -ForegroundColor Cyan
+Write-Host " RÉSUMÉ DES TESTS" -ForegroundColor Cyan
 Write-Host "==========================================" -ForegroundColor Cyan
 Write-Host "Tests réussis: " -NoNewline
 Write-Host $SUCCESS -ForegroundColor Green
@@ -174,16 +174,16 @@ Write-Host $FAILED -ForegroundColor Red
 Write-Host ""
 
 if ($FAILED -eq 0) {
-    Write-Host "🎉 TOUS LES TESTS SONT PASSÉS !" -ForegroundColor Green
+    Write-Host " TOUS LES TESTS SONT PASSÉS !" -ForegroundColor Green
     Write-Host "Infrastructure prête pour la démonstration." -ForegroundColor Green
     Write-Host ""
-    Write-Host "🌐 Accès:" -ForegroundColor Cyan
+    Write-Host " Accès:" -ForegroundColor Cyan
     Write-Host "   Frontend:  http://localhost:8080" -ForegroundColor White
     Write-Host "   Dashboard: http://localhost:8080/haproxy?stats (voir .env)" -ForegroundColor White
     Write-Host "   API:       http://localhost:8080/api/resultat?matricule=000001" -ForegroundColor White
     exit 0
 } else {
-    Write-Host "⚠️  Certains tests ont échoué." -ForegroundColor Yellow
+    Write-Host " Certains tests ont échoué." -ForegroundColor Yellow
     Write-Host "Vérifiez les logs avec: vagrant ssh <vm> -c `"sudo journalctl -xe`"" -ForegroundColor Yellow
     exit 1
 }

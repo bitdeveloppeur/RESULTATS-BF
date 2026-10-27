@@ -4,14 +4,14 @@
 
 ---
 
-## 🚀 Démarrage Rapide (5 minutes)
+## Démarrage Rapide (5 minutes)
 
 ### 1. Lancer tous les tests
 ```powershell
 powershell -ExecutionPolicy Bypass -File tests/test-simple.ps1
 ```
 
-**Résultat attendu**: 6-8 tests PASS ✅
+**Résultat attendu**: 6-8 tests PASS 
 
 ---
 
@@ -34,7 +34,7 @@ powershell -ExecutionPolicy Bypass -File tests/test-simple.ps1
    Nom: CANDIDAT_1
    Série: C
    Moyenne: 10.68
-   Statut: ✅ ADMIS
+   Statut:  ADMIS
    ```
 
 **Autres matricules à tester:**
@@ -52,7 +52,7 @@ powershell -ExecutionPolicy Bypass -File tests/test-simple.ps1
 - Utiliser les credentials définis dans `.env` (LB_STATS_USER / LB_STATS_PASSWORD)
 
 **Ce que tu verras:**
-- **État des serveurs** (app1, app2): UP 🟢 ou DOWN 🔴
+- **État des serveurs** (app1, app2): UP  ou DOWN 
 - **Statistiques en temps réel:**
   - Sessions actives
   - Nombre de requêtes traitées
@@ -61,7 +61,7 @@ powershell -ExecutionPolicy Bypass -File tests/test-simple.ps1
 - **Backend**: `app_servers` avec algorithme Round Robin
 
 **Points à montrer:**
-- Les 2 serveurs app1 et app2 sont UP 🟢
+- Les 2 serveurs app1 et app2 sont UP 
 - Le compteur de requêtes augmente à chaque refresh
 - Health check: `GET /api/sante` toutes les 3s
 
@@ -106,9 +106,9 @@ exit
 
 ---
 
-## 🎬 3. Scénarios de Démonstration
+##  3. Scénarios de Démonstration
 
-### Scénario 1: Fonctionnement Normal ✅
+### Scénario 1: Fonctionnement Normal 
 
 **Objectif:** Montrer que toute l'infrastructure fonctionne
 
@@ -129,7 +129,7 @@ start http://localhost:8080/haproxy?stats
 
 ---
 
-### Scénario 2: Résilience Applicative 🔄
+### Scénario 2: Résilience Applicative 
 
 **Objectif:** Démontrer que si app1 tombe, app2 prend le relais automatiquement (R2, R7)
 
@@ -149,7 +149,7 @@ vagrant halt app1
 ```powershell
 curl.exe http://localhost:8080/api/sante
 ```
-**Résultat:** `"hostname":"app2"` ✅
+**Résultat:** `"hostname":"app2"` 
 
 ```powershell
 # Tester plusieurs fois
@@ -157,14 +157,14 @@ for($i=1; $i -le 5; $i++) {
     curl.exe -s http://localhost:8080/api/sante | Select-String hostname
 }
 ```
-**Tous les appels vont vers app2** ✅
+**Tous les appels vont vers app2** 
 
 #### Étape 4: Dashboard HAProxy
 Va sur http://localhost:8080/haproxy?stats
 
 **Tu verras:**
-- app1: 🔴 DOWN
-- app2: 🟢 UP
+- app1:  DOWN
+- app2:  UP
 
 #### Étape 5: Redémarrer app1
 ```powershell
@@ -176,7 +176,7 @@ vagrant up app1
 # Vérifier
 curl.exe http://localhost:8080/api/sante
 ```
-**app1 et app2 alternent à nouveau** ✅
+**app1 et app2 alternent à nouveau** 
 
 ---
 
@@ -199,13 +199,13 @@ vagrant halt lb1
 ```powershell
 vagrant ssh lb2 -c "ip addr show eth1 | grep 192.168.63.10"
 ```
-**Résultat:** VIP maintenant sur lb2 (devenu MASTER) ✅
+**Résultat:** VIP maintenant sur lb2 (devenu MASTER) 
 
 #### Étape 4: API toujours accessible
 ```powershell
 curl.exe http://localhost:8080/api/sante
 ```
-**Fonctionne toujours!** ✅
+**Fonctionne toujours!** 
 
 #### Étape 5: Redémarrer lb1
 ```powershell
@@ -231,7 +231,7 @@ vagrant ssh bdd1 -c "sudo -u postgres psql -c 'SELECT client_addr, state, sync_s
 ----------------+-----------+------------
  192.168.63.32 | streaming | async
 ```
-✅ **bdd2 est bien en réplication**
+**bdd2 est bien en réplication**
 
 #### Test d'insertion (optionnel)
 ```powershell
@@ -272,20 +272,20 @@ Requête 4 → app2
 Requête 5 → app1
 ...
 ```
-✅ **Alternance parfaite (Round Robin)**
+ **Alternance parfaite (Round Robin)**
 
 ---
 
-## 📋 4. Checklist Présentation
+##  4. Checklist Présentation
 
 Avant de commencer, vérifie:
 
 - [ ] Toutes les VMs sont running: `vagrant status`
-- [ ] Frontend accessible: http://localhost:8080 ✅
-- [ ] Dashboard accessible: http://localhost:8080/haproxy?stats ✅
-- [ ] API fonctionne: `curl.exe http://localhost:8080/api/sante` ✅
-- [ ] 50 000 résultats en BDD ✅
-- [ ] VIP active sur lb1 ou lb2 ✅
+- [ ] Frontend accessible: http://localhost:8080 
+- [ ] Dashboard accessible: http://localhost:8080/haproxy?stats 
+- [ ] API fonctionne: `curl.exe http://localhost:8080/api/sante` 
+- [ ] 50 000 résultats en BDD 
+- [ ] VIP active sur lb1 ou lb2 
 
 ---
 
@@ -293,20 +293,20 @@ Avant de commencer, vérifie:
 
 ### Requirements Satisfaits (R1-R8)
 
-✅ **R1**: IaC avec Vagrant (source unique de vérité)  
-✅ **R2**: 6 VMs (bdd1, bdd2, app1, app2, lb1, lb2)  
-✅ **R3**: 50 000 étudiants générés automatiquement  
-✅ **R4**: API REST FastAPI (modulaire)  
-✅ **R5**: Réplication PostgreSQL streaming asynchrone  
-✅ **R6**: Load balancing HAProxy (Round Robin)  
-✅ **R7**: Health checks toutes les 3s (fall 2, rise 2)  
-✅ **R8**: Tolérance aux pannes (app et lb)
+ **R1**: IaC avec Vagrant (source unique de vérité)  
+ **R2**: 6 VMs (bdd1, bdd2, app1, app2, lb1, lb2)  
+ **R3**: 50 000 étudiants générés automatiquement  
+ **R4**: API REST FastAPI (modulaire)  
+ **R5**: Réplication PostgreSQL streaming asynchrone  
+ **R6**: Load balancing HAProxy (Round Robin)  
+ **R7**: Health checks toutes les 3s (fall 2, rise 2)  
+ **R8**: Tolérance aux pannes (app et lb)
 
 ### Extensions Intégrées
 
-✅ **E1**: HTTPS/HA avec Keepalived (VIP 192.168.63.10, VRRP)  
-✅ **E2**: Interface Vue.js (thème vert moutarde 🇧🇫)  
-✅ **E4**: Rolling Update (config HAProxy)
+**E1**: HTTPS/HA avec Keepalived (VIP 192.168.63.10, VRRP)  
+ **E2**: Interface Vue.js (thème vert moutarde 🇧🇫)  
+ **E4**: Rolling Update (config HAProxy)
 
 ### Architecture
 
@@ -346,7 +346,7 @@ VIP 192.168.63.10 (Keepalived VRRP)
 
 ---
 
-## 🆘 6. Dépannage Rapide
+## 6. Dépannage Rapide
 
 ### Problème: Une VM ne démarre pas
 ```powershell
@@ -384,7 +384,7 @@ vagrant ssh bdd1 -c "sudo systemctl restart postgresql"
 vagrant halt
 vagrant up
 ```
-⏱️ **5-8 minutes** pour tout redémarrer
+ **5-8 minutes** pour tout redémarrer
 
 ---
 
@@ -432,7 +432,7 @@ Health check: GET /api/sante toutes les 3s
 
 ---
 
-## ✨ 8. Conclusion
+##  8. Conclusion
 
 **Points forts à souligner:**
 
@@ -449,8 +449,6 @@ Health check: GET /api/sante toutes les 3s
 vagrant destroy -f
 vagrant up
 ```
-→ Infrastructure complète reproductible! 🚀
 
----
 
-**Bon courage pour ta présentation! 💪**
+

@@ -4,7 +4,7 @@ Ce document explique comment accéder à tous les composants de l'infrastructure
 
 ---
 
-## 📱 1. Frontend Vue.js (Interface Web)
+##  1. Frontend Vue.js (Interface Web)
 
 ### Accès
 - **URL**: http://localhost:8080
@@ -31,7 +31,7 @@ Ce document explique comment accéder à tous les composants de l'infrastructure
 
 ---
 
-## 🗄️ 2. Base de données PostgreSQL
+##  2. Base de données PostgreSQL
 
 ### Accès en ligne de commande
 
@@ -100,21 +100,21 @@ Si tu veux utiliser **pgAdmin** ou **DBeaver** depuis Windows:
 
 ---
 
-## 📊 3. Dashboard HAProxy (Monitoring)
+## 3. Dashboard HAProxy (Monitoring)
 
 ### Accès
 - **URL**: http://localhost:8080/haproxy?stats
 - **Credentials**: Définis dans `.env` (variables LB_STATS_USER et LB_STATS_PASSWORD)
 
 ### Ce que tu peux voir
-- ✅ **État des serveurs** (app1, app2): UP/DOWN
-- 📈 **Métriques en temps réel**:
+-  **État des serveurs** (app1, app2): UP/DOWN
+-  **Métriques en temps réel**:
   - Nombre de requêtes par serveur
   - Temps de réponse moyen
   - Taux d'erreur
   - Sessions actives
-- 🔄 **Health checks**: toutes les 3 secondes
-- 🎯 **Algorithme**: Round Robin (alternance app1/app2)
+-  **Health checks**: toutes les 3 secondes
+-  **Algorithme**: Round Robin (alternance app1/app2)
 
 ### Actions possibles
 - **Désactiver un serveur**: tester la résilience
@@ -174,7 +174,7 @@ curl.exe http://localhost:8080/
 
 ---
 
-## 🖥️ 5. Accès SSH aux VMs
+##  5. Accès SSH aux VMs
 
 ### Se connecter à une VM
 ```powershell
@@ -244,7 +244,7 @@ sudo -u postgres psql resultats_bf
 
 ---
 
-## 🧪 6. Tests automatisés
+##  6. Tests automatisés
 
 ### Lancer tous les tests
 ```bash
@@ -360,7 +360,7 @@ vagrant ssh bdd1 -c "sudo -u postgres psql resultats_bf -c \"DELETE FROM resulta
 
 ---
 
-## 🆘 8. Troubleshooting
+##  8. Troubleshooting
 
 ### Problème: Frontend ne s'affiche pas
 ```powershell
@@ -414,7 +414,7 @@ vagrant reload app1 --provision
 
 ---
 
-## 📚 9. Ressources supplémentaires
+##  9. Ressources supplémentaires
 
 ### Documentation du projet
 - `README.md` - Vue d'ensemble
@@ -434,4 +434,3 @@ vagrant reload app1 --provision
 
 ---
 
-**Bon courage pour ta présentation ! 🚀**
