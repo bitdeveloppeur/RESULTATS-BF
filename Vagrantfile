@@ -33,6 +33,8 @@ end
 
 # Répartiteur de charge
 NOEUDS << { nom: "lb1", ip: "#{RESEAU}.11", mem: 512, role: "lb" }
+# ajouter pour faire E1
+NOEUDS << { nom: "lb2", ip: "#{RESEAU}.12", mem: 512, role: "lb" }
 
 # Les scripts liront ce fichier dans /vagrant/config/noeuds.yml
 FileUtils.mkdir_p("config")
@@ -47,8 +49,8 @@ Vagrant.configure("2") do |config|
       m.vm.hostname = n[:nom]
       m.vm.network "private_network", ip: n[:ip]
       
-      # Port forwarding uniquement pour le load balancer
-      m.vm.network "forwarded_port", guest: 80, host: 8080 if n[:role] == "lb"
+      # Port forwarding uniquement pour le load balancer  (E1)
+      m.vm.network "forwarded_port", guest: 80, host: 8080 if n[:nom] == "lb1"
       
       m.vm.provider "virtualbox" do |vb|
         vb.memory = n[:mem]

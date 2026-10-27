@@ -6,11 +6,20 @@ set -e  # Arrêter le script si une commande échoue
 
 echo "=== Installation HAProxy sur lb1 ==="
 
+# Charger les variables d'environnement depuis .env
+if [ -f /vagrant/.env ]; then
+    export $(grep -v '^#' /vagrant/.env | xargs)
+fi
+
+# Utiliser les variables d'environnement avec fallback
+HAPROXY_USER=${LB_STATS_USER:-admin}
+HAPROXY_PASS=${LB_STATS_PASSWORD:-changeme_lb_password}
+
 # 1. Mettre à jour les paquets
 apt-get update -qq
 
-# 2. Installer HAProxy
-apt-get install -y haproxy
+# 2. Installer HAProxy et socat (pour la gestion dynamique de l'extension E4)
+apt-get install -y haproxy socat
 
 # 3. Lire la configuration des noeuds depuis le fichier YAML
 # On extrait tous les serveurs applicatifs (role: "app")
@@ -40,16 +49,37 @@ defaults
 # Frontend - Point d'entrée pour les requêtes
 frontend http_front
     bind *:80
+    
+    # Stats dashboard intégré - Accessible sur /haproxy?stats
+    stats enable
+    stats uri /haproxy?stats
+    stats refresh 5s
+    stats show-legends
+    stats show-node
+    stats auth $HAPROXY_USER:$HAPROXY_PASS
+    
+    # ACL pour rediriger le trafic normal vers les apps
+    acl is_stats path_beg /haproxy
+    use_backend stats_backend if is_stats
     default_backend app_servers
+
+# Backend pour le dashboard stats
+backend stats_backend
+    stats enable
+    stats uri /haproxy?stats
+    stats refresh 5s
+    stats show-legends
+    stats show-node
+    stats auth $HAPROXY_USER:$HAPROXY_PASS
 
 # Backend - Pool de serveurs applicatifs
 backend app_servers
     balance roundrobin
     
-    # Sonde de santé : teste GET /sante toutes les 3 secondes
+    # Sonde de santé : teste GET /api/sante toutes les 3 secondes
     # Si 2 échecs consécutifs, le serveur est écarté
     # Si 2 succès consécutifs, le serveur est remis en service
-    option httpchk GET /sante
+    option httpchk GET /api/sante
     http-check expect status 200
     
 EOF
@@ -85,6 +115,48 @@ systemctl restart haproxy
 
 # 8. Vérifier le statut
 systemctl status haproxy --no-pager
+
+
+# ============================================================
+# E1 — Keepalived : VIP partagée entre lb1 (MASTER) et lb2 (BACKUP)
+# ============================================================
+echo "=== Configuration Keepalived (VRRP) ==="
+
+apt-get install -y keepalived
+
+HOST=$(hostname)
+if [ "$HOST" = "lb1" ]; then
+    STATE="MASTER"
+    PRIORITY=100
+else
+    STATE="BACKUP"
+    PRIORITY=90
+fi
+
+# Détection auto de l'interface du réseau privé
+IFACE=$(ip -o -4 addr show | grep "192.168.63" | awk '{print $2}' | head -1)
+echo "Interface détectée : $IFACE"
+
+cat > /etc/keepalived/keepalived.conf <<EOF
+vrrp_instance VI_1 {
+    state $STATE
+    interface $IFACE
+    virtual_router_id 51
+    priority $PRIORITY
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass ResultatsBF2026
+    }
+    virtual_ipaddress {
+        192.168.63.10/24
+    }
+}
+EOF
+
+systemctl enable keepalived
+systemctl restart keepalived
+echo "Keepalived démarré en $STATE sur $HOST (VIP = 192.168.63.10)"
 
 echo "=== HAProxy installé et configuré avec succès ==="
 echo "Accès web : http://192.168.63.11"

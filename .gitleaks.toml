@@ -1,0 +1,19 @@
+# Configuration GitLeaks pour RÉSULTATS-BF
+# Whitelist des faux positifs détectés par GitGuardian
+
+[[rules]]
+id = "curl-basic-auth"
+description = "Curl basic auth credentials"
+regex = '''(admin:admin123)'''
+
+# Whitelist les commits où ces credentials étaient utilisés pour des tests locaux
+[[rules.allowlist]]
+commits = ["b5e44ef"]
+description = "Test credentials for local HAProxy dashboard - replaced by .env variables in later commits"
+
+[[rules.allowlist]]
+paths = [
+    '''tests/test-simple\.ps1''',
+    '''tests/test-infrastructure\.ps1''',
+]
+description = "Test files - credentials now read from .env (fixed in commits 7218913 and 7af02f1)"
